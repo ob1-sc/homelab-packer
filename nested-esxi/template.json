@@ -1,0 +1,56 @@
+{
+    "builders": [
+    {
+      "type": "vsphere-iso",
+  
+      "vcenter_server": "{{user `vsphere_vcenter`}}",
+      "username": "{{user `vsphere_username`}}",
+      "password": "{{user `vsphere_password`}}",
+      "insecure_connection": true,
+  
+      "datacenter": "{{user `vsphere_datacenter`}}",
+      "cluster": "{{user `vsphere_cluster`}}",
+      "folder": "{{user `vsphere_template_folder`}}",
+      "datastore": "{{user `vsphere_vm_datastore`}}",
+      "network_adapters": [
+        {
+          "network": "{{user `vsphere_network`}}",
+          "network_card": "vmxnet3"
+        }
+      ],
+      "convert_to_template": "true",
+  
+      "vm_name": "{{user `vm_name`}}",
+      "guest_os_type": "{{user `vm_guestos`}}",
+  
+      "http_directory": "{{ user `http_directory` }}", 
+      "CPUs": "{{user `vm_cpu_size`}}",
+      "RAM": "{{user `vm_ram_size`}}",
+      "NestedHV": true,
+      "disk_controller_type":  "{{user `vm_disk_controller`}}",
+      "storage": [
+        {
+          "disk_size": "{{user `vm_disk_size`}}",
+          "disk_thin_provisioned": true
+        }
+      ],
+      
+      "communicator" : "ssh", 
+      "ssh_username": "{{user `guest_username`}}",
+      "ssh_password": "{{user `guest_password`}}",
+      "ssh_timeout" : "{{user `ssh_timeout`}}" , 
+
+      "iso_paths": [
+        "[{{user `vsphere_iso_datastore`}}] {{user `iso_file_path`}}"
+      ],
+
+      "boot_command": [
+        "<enter>",
+        "<SHIFT+O>",
+        " ks=",
+        "<enter>" ,
+        ""
+      ]
+    }
+]
+}
